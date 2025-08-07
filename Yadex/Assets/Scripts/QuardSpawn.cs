@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class QuardSpawn : MonoBehaviour
 {
-    [SerializeField] private GameObject quard;
-    [SerializeField] private GameObject quardBonus; 
-
-
+    [SerializeField] private GameObject _quard;
+    [SerializeField] private GameObject _quardBonus; 
     public static QuardSpawn inststance { get; private set; }
+    private float _bonusSpawnTimer = 3f;
 
     void Start()
     {
@@ -36,7 +35,7 @@ public class QuardSpawn : MonoBehaviour
         {
             float randomSpawnTime = Random.Range(1f, 2f);
             float yQuardPosition = Random.Range(-3f, 3f);
-            GameObject newQuard = Instantiate(quard, new Vector2(transform.position.x, transform.position.y + yQuardPosition), Quaternion.identity);
+            GameObject newQuard = Instantiate(_quard, new Vector3(transform.position.x, transform.position.y + yQuardPosition, transform.position.z), Quaternion.identity);
             newQuard.transform.parent = transform.parent;
             yield return new WaitForSeconds(randomSpawnTime);
         }
@@ -45,12 +44,12 @@ public class QuardSpawn : MonoBehaviour
     //Рандомное появление бонуса
     public IEnumerator BonusSpawm()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(_bonusSpawnTimer);
         while (true)
         {
             float randomSpawnBonusTime = Random.Range(5f, 8f);
             float yQuardPosition = Random.Range(-3f, 3f);
-            GameObject newQuard = Instantiate(quardBonus, new Vector2(transform.position.x, transform.position.y + yQuardPosition), Quaternion.identity);
+            GameObject newQuard = Instantiate(_quardBonus, new Vector2(transform.position.x, transform.position.y + yQuardPosition), Quaternion.identity);
             newQuard.transform.parent = transform.parent;
             yield return new WaitForSeconds(randomSpawnBonusTime);
         }

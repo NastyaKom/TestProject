@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement; 
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class BallController : MonoBehaviour
 {
-    [SerializeField] private GameObject startText;
-    [SerializeField] private GameObject ballParticle;
-    [SerializeField] private float force;
-    private Rigidbody2D rbBall;
-
-    bool isStart = true; 
+    [SerializeField] private GameObject _startText;
+    [SerializeField] private GameObject _ballParticle;
+    private float _force = 1000f;
+    private Rigidbody2D _rbBall;
+    private bool _isStart = true; 
 
     void Start()
     {
-        rbBall = GetComponent<Rigidbody2D>();
-        rbBall.isKinematic = true;
-        ballParticle.SetActive(false); 
+        _rbBall = GetComponent<Rigidbody2D>();
+        _rbBall.isKinematic = true;
+        _ballParticle.SetActive(false); 
     }
 
 
-
+    //Столкновения с барьером
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.tag == "Barrier")
@@ -34,15 +34,21 @@ public class BallController : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            if (isStart)
-            {
-                startText.SetActive(false);
-                ballParticle.SetActive(true);
-                rbBall.isKinematic = false;
-                isStart = false;
-                QuardSpawn.inststance.StartSpawn(); 
-            }
-            rbBall.AddForce(gameObject.transform.up * force);
+            SetBallForce(_isStart); 
         } 
+    }
+
+    //Толчок мяча
+    private void SetBallForce(bool isStart)
+    {
+        if (isStart)
+        {
+            _startText.SetActive(false);
+            _ballParticle.SetActive(true);
+            _rbBall.isKinematic = false;
+            _isStart = false;
+            QuardSpawn.inststance.StartSpawn();
+        }
+        _rbBall.AddForce(gameObject.transform.up * _force * Time.deltaTime);
     }
 }

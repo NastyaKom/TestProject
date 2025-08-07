@@ -5,10 +5,10 @@ using UnityEngine;
 public class ObstacleMovement : MonoBehaviour
 {
   
-    private float speedObstacle = 6f;
-    private float speedObstacleUp = 2f;
-    private Vector2 startPosition;
-    private float movementRange = 1;
+    private float _speedObstacle = 6f;
+    private float _speedObstacleUp = 2f;
+    private Vector2 _startPosition;
+    private float _movementRange = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,16 +20,16 @@ public class ObstacleMovement : MonoBehaviour
 
     private void Start()
     {
-        startPosition = transform.position; 
+        _startPosition = transform.position; 
     }
 
 
     //Движение препятствий 
     void FixedUpdate()
     {
-        transform.position -= new Vector3(1f,0f, 0f) * Time.deltaTime * speedObstacle;
-        transform.position += transform.up * Time.deltaTime * speedObstacleUp;
-        if ((transform.position.y >= startPosition.y + movementRange ) || (transform.position.y <= startPosition.y - movementRange))
+        transform.position -= new Vector3(1f,0f, 0f) * Time.deltaTime * _speedObstacle;
+        transform.position += transform.up * Time.deltaTime * _speedObstacleUp;
+        if ((transform.position.y >= _startPosition.y + _movementRange ) || (transform.position.y <= _startPosition.y - _movementRange))
         {
             transform.Rotate(new Vector3(0, 0, 180));
         }

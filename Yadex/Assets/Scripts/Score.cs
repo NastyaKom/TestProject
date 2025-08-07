@@ -5,10 +5,9 @@ using TMPro;
 
 public class Score : MonoBehaviour
 {
-
     [SerializeField] private TextMeshProUGUI textScore;
     public static Score instance { get; private set; }
-    private int score = 0; 
+    private int _score = 0; 
 
     private void Start()
     {
@@ -25,8 +24,8 @@ public class Score : MonoBehaviour
     //Изменение счётв
     public void AddScore()
     {
-        score++;
-        textScore.text = score + ""; 
+        _score++;
+        textScore.text = _score + ""; 
     }
 
 }

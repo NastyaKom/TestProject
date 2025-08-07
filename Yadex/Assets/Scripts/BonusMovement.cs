@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class BonusMovement : MonoBehaviour
 {
-    private float speedBonus = 6;
-    private float distance = 2f;
-    private GameObject ball;
+    private float _speedBonus = 6f;
+    private float _distance = 2f;
+    private float _towardSpeed = 8f;
+    private GameObject _ball;
 
 
     private void Start()
     {
-        ball = GameObject.FindGameObjectWithTag("Ball");
+        _ball = GameObject.FindGameObjectWithTag("Ball");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,13 +27,13 @@ public class BonusMovement : MonoBehaviour
     // Движение бонуса
     void Update()
     {
-        if (Vector2.Distance(transform.position, ball.transform.position) < distance)
+        if (Vector2.Distance(transform.position, _ball.transform.position) < _distance)
         {
-            transform.position = Vector2.MoveTowards(transform.position, ball.transform.position, 0.2f);
+            transform.position = Vector2.MoveTowards(transform.position, _ball.transform.position, _towardSpeed * Time.deltaTime);
         }
         else
         {
-            transform.position -= transform.right * Time.deltaTime * speedBonus;
+            transform.position -= transform.right * Time.deltaTime * _speedBonus;
         }
     }
 }
